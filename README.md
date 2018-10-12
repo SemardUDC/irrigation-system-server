@@ -17,17 +17,29 @@ Recibe datos de un microcontrolador por medio del protocolo MQTT. Los datos a ge
 ### Actuadores:
 - Electrovalvula para activar/desactivar flujo de agua.
 
-Por medio de *topics* MQTT la API recibe lecturas de sensores y estado de actuadores. El servidor se encarga de enviar peticiones para cambiar el estado de la electrovalvula y así permitir/negar el paso de agua.
+Por medio de *topics* MQTT la API recibe lecturas de sensores y estado de actuadores. El servidor es esencial para guardar datos históricos de lecturas y servirlas por HTTP al cliente web.
 
 ## Cliente
 - Framework Angular para cliente Web.
 - Bootswatch para temas Bootstrap.
 - ngx-mqtt para usar MQTT con Angular.
 
-El cliente web ofrece visualizaciones de los datos recibidos por los sensores y permite, mediante la misma interfaz, accionar las electroválvulas para cambiar su estado. Todo se gestiona mediante los *topics* MQTT pertinentes.
+El cliente web ofrece visualizaciones de los datos recibidos del servidor correspondientes al estado del sistema de riego. También permite accionar las electroválvulas para cambiar su estado y actualizar las visualizaciones de la interfaz al apoyarse en los *topics* MQTT pertinentes.
 
 ## Topics MQTT
-Por rellenar
-
-## Formato de transmisión JSON
-Por rellenar
+### Sensores
+```
+- irrigation-system/sensor/ph-meter
+- irrigation-system/sensor/water-flow
+- irrigation-system/sensor/ultrasonic
+- irrigation-system/sensor/pressure
+```
+### Actuadores
+```
+- irrigation-system/actuator/solenoid-valve/get
+- irrigation-system/actuator/solenoid-valve/set
+```
+### Reporte de estado y conexión
+```
+- irrigation-system/state
+```
