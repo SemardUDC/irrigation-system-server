@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const pressureSchema = new mongoose.Schema({
+const PressureSchema = new mongoose.Schema({
     identification: {
         type: Number,
         required: true
@@ -19,4 +19,4 @@ const pressureSchema = new mongoose.Schema({
     }
 });
 
-module.exports = mongoose.model('pressures', pressureSchema);
+module.exports = mongoose.model('pressures', PressureSchema);

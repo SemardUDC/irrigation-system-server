@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const waterFlowSchema = new mongoose.Schema({
+const WaterFlowSchema = new mongoose.Schema({
     identification: {
         type: Number,
         required: true
@@ -20,4 +20,4 @@ const waterFlowSchema = new mongoose.Schema({
     }
 });
 
-module.exports = mongoose.model('water-flows', waterFlowSchema);
+module.exports = mongoose.model('water-flows', WaterFlowSchema);

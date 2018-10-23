@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const phMeterSchema = new mongoose.Schema({
+const PhMeterSchema = new mongoose.Schema({
     identification: {
         type: Number,
         required: true
@@ -21,4 +21,4 @@ const phMeterSchema = new mongoose.Schema({
     }
 });
 
-module.exports = mongoose.model('ph-meters', phMeterSchema);
+module.exports = mongoose.model('ph-meters', PhMeterSchema);

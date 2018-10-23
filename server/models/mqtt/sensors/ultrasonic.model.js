@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const ultrasonicSchema = new mongoose.Schema({
+const UltrasonicSchema = new mongoose.Schema({
     identification: {
         type: Number,
         required: true
@@ -22,4 +22,4 @@ const ultrasonicSchema = new mongoose.Schema({
     }
 });
 
-module.exports = mongoose.model('ultrasonics', ultrasonicSchema);
+module.exports = mongoose.model('ultrasonics', UltrasonicSchema);
