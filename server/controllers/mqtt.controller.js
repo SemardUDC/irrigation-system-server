@@ -1,7 +1,12 @@
+// Sensors
 const WaterFlow = require('../models/mqtt/sensors/water-flow.model');
 const PhMeter = require('../models/mqtt/sensors/ph-meter.model');
 const Pressure = require('../models/mqtt/sensors/pressure.model');
 const Ultrasonic = require('../models/mqtt/sensors/ultrasonic.model');
+
+// Actuators
+const SolenoidValve = require('../models/mqtt/actuators/solenoid-valve');
+
 // All controllers must receive a message object.
 
 // Sensor controllers.
@@ -35,7 +40,10 @@ function pressureController(topic, message, packet) {
 
 // Actuator controllers.
 function solenoidValveController(topic, message, packet) {
+    message.date = Date.now();
+    const solenoidValve = new SolenoidValve(message);
     console.log(`Solenoid Valve called - Message received from topic: ${topic}`);
+    return solenoidValve.save();
 }
 
 // ESP Client State controller.
