@@ -2,6 +2,7 @@
 const config = require('./config/config');
 const app = require('./config/express');
 require('./config/mongoose');
+require('./config/mqtt');
 
 // module.parent check is required to support mocha watch
 // src: https://github.com/mochajs/mocha/issues/1912

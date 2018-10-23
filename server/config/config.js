@@ -21,10 +21,16 @@ const envVarsSchema = Joi.object({
   MONGO_HOST: Joi.string().required()
     .description('Mongo DB host url'),
   MONGO_PORT: Joi.number()
-    .default(27017)
+    .default(27017),
+  MQTT_HOST: Joi.string().required()
+    .description('MQTT broker Url'),
+  MQTT_USERNAME: Joi.string()
+    .description('MQTT username'),
+  MQTT_PASSWORD: Joi.string()
+    .description('MQTT password')
 }).unknown()
   .required();
-
+  
 const { error, value: envVars } = Joi.validate(process.env, envVarsSchema);
 if (error) {
   throw new Error(`Config validation error: ${error.message}`);
@@ -39,6 +45,11 @@ const config = {
   mongo: {
     host: envVars.MONGO_HOST,
     port: envVars.MONGO_PORT
+  },
+  mqtt: {
+    host: envVars.MQTT_HOST,
+    username:envVars.MQTT_USERNAME,
+    password:envVars.MQTT_PASSWORD
   }
 };
 
