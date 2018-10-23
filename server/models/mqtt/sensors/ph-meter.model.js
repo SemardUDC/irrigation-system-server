@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const waterFlowSchema = new mongoose.Schema({
+const phMeterSchema = new mongoose.Schema({
     identification: {
         type: Number,
         required: true
@@ -9,9 +9,11 @@ const waterFlowSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    content: {
+    ph: {
         type: Number,
-        required: true
+        required: true,
+        min: [0, 'Minimum Ph limit exceeded'],
+        max: [14, 'Maximum Ph value exceeded']
     },
     date: {
         type: Date,
@@ -19,4 +21,4 @@ const waterFlowSchema = new mongoose.Schema({
     }
 });
 
-module.exports = mongoose.model('water-flows', waterFlowSchema);
+module.exports = mongoose.model('ph-meters', phMeterSchema);
