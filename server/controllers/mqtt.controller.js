@@ -1,5 +1,6 @@
 const WaterFlow = require('../models/mqtt/sensors/water-flow.model');
 const PhMeter = require('../models/mqtt/sensors/ph-meter.model');
+const Pressure = require('../models/mqtt/sensors/pressure.model');
 // All controllers must receive a message object.
 
 // Sensor controllers.
@@ -22,7 +23,10 @@ function ultrasonicController(topic, message, packet) {
 }
 
 function pressureController(topic, message, packet) {
+    message.date = Date.now();
+    const pressure = new Pressure(message);
     console.log(`Pressure called - Message received from topic: ${topic}`);
+    return pressure.save();
 }
 
 // Actuator controllers.
