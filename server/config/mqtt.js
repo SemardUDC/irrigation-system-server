@@ -26,8 +26,8 @@ client.subscribe(mqttTopics, (error, granted) => {
 
 client.on('message', async (topic, payload, packet) => {
     if (mqttRoutes[topic]) {
-        const message = JSON.parse(payload);
         try {
+            const message = JSON.parse(payload);
             const result = await mqttRoutes[topic].controller(topic, message, packet);
             if (!result) {
                 throw new Error(`Message ${message} not saved.`)
