@@ -43,3 +43,31 @@ El cliente web ofrece visualizaciones de los datos recibidos del servidor corres
 ```
 - irrigation-system/state
 ```
+
+## RESTful API
+### Sensores
+```
+- GET /sensor/
+- GET /sensor/water-flow/
+- GET /sensor/water-flow/:identification
+- GET /sensor/ultrasonic/
+- GET /sensor/ultrasonic/:identification
+- GET /sensor/ph-meter/
+- GET /sensor/ph-meter/:identification
+- GET /sensor/pressure/
+- GET /sensor/pressure/:identification
+```
+### Actuadores
+```
+- GET /actuator/
+- GET /actuator/solenoid-valve/
+- GET /actuator/solenoid-valve/:identification
+```
+
+### Parametros de Consulta
+| Parametro | Descripción                                                                                         | Tipo   |
+|-----------|-----------------------------------------------------------------------------------------------------|--------|
+| `time`      | Define una franja de tiempo para filtrar los datos a servir. Valores esperados son `today` o `day`. | `string` |
+| `value`     | Solo útil cuando `time=day`. Recibe un timestamp y evalua los registros con el día que representa.     | `number` |
+| `count`    | Numero de registros a entregar.                                                                     | `number` |   
+
