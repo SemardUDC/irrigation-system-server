@@ -3,7 +3,7 @@ const moment = require('moment');
 
 async function getWaterFlowRecords(time, value, count, identification = undefined) {
     let dateSelected = undefined;
-    let dateQueryCondition = { identification };
+    let dateQueryCondition = (identification) ? { identification } : {};
 
     if (time === 'today') {
         dateSelected = moment(Date.now());
@@ -12,6 +12,9 @@ async function getWaterFlowRecords(time, value, count, identification = undefine
             throw new Error(`Uncompleted query parameters, received time but no value.`);
         }
         dateSelected = moment(value, 'YYYYMMDD');
+        if (!dateSelected.isValid()) { 
+            throw new Error(`Invalid query 'value' when parsing to a date: ${value}`);
+        }
     }
 
     if (dateSelected) {
