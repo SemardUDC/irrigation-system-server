@@ -22,4 +22,12 @@ const UltrasonicSchema = new mongoose.Schema({
     }
 });
 
+UltrasonicSchema.set('toObject', {
+    transform: (doc, ret) => {
+        delete ret._id;
+        delete ret.__v;
+        return ret;
+    }
+});
+
 module.exports = mongoose.model('ultrasonics', UltrasonicSchema);
