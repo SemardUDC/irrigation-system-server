@@ -1,9 +1,10 @@
 const WaterFlow = require('../models/sensors/water-flow.model');
+const Ultrasonic = require('../models/sensors/ultrasonic.model');
 const moment = require('moment');
 
-async function getWaterFlowRecords(time, value, count, identification = undefined) {
+function createQueryCondition(time, value, identification = undefined) {
     let dateSelected = undefined;
-    let dateQueryCondition = (identification) ? { identification } : {};
+    let queryCondition = (identification) ? { identification } : {};
 
     if (time === 'today') {
         dateSelected = moment(Date.now());
@@ -12,23 +13,39 @@ async function getWaterFlowRecords(time, value, count, identification = undefine
             throw new Error(`Uncompleted query parameters, received time but no value.`);
         }
         dateSelected = moment(value, 'YYYYMMDD');
-        if (!dateSelected.isValid()) { 
+        if (!dateSelected.isValid()) {
             throw new Error(`Invalid query 'value' when parsing to a date: ${value}`);
         }
     }
 
     if (dateSelected) {
-        dateQueryCondition.date = {
+        queryCondition.date = {
             $gte: dateSelected.startOf('day').valueOf(), $lte: dateSelected.endOf('day').valueOf()
         }
     }
-    const waterRecords = await WaterFlow.find(dateQueryCondition).limit(count).sort({ date: 'desc' });
+
+    return queryCondition;
+}
+
+async function getWaterFlowRecords(time, value, count, identification = undefined) {
+    const queryCondition = createQueryCondition(time, value, identification);
+    const waterRecords = await WaterFlow.find(queryCondition).limit(count).sort({ date: 'desc' });
     if (!waterRecords) {
         throw new Error('No water-flow record was found.');
     }
     return waterRecords;
 }
 
+async function getUltrasonicRecords(time, value, count, identification = undefined) {
+    const queryCondition = createQueryCondition(time, value, identification);
+    const ultrasonicRecords = await Ultrasonic.find(queryCondition).limit(count).sort({ date: 'desc' });
+    if (!ultrasonicRecords) {
+        throw new Error('No ultrasonic record was found.');
+    }
+    return ultrasonicRecords;
+}
+
 module.exports = {
-    getWaterFlowRecords
+    getWaterFlowRecords,
+    getUltrasonicRecords
 }
