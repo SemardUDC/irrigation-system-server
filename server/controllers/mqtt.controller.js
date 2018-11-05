@@ -1,11 +1,11 @@
 // Sensors
-const WaterFlow = require('../models/mqtt/sensors/water-flow.model');
-const PhMeter = require('../models/mqtt/sensors/ph-meter.model');
-const Pressure = require('../models/mqtt/sensors/pressure.model');
-const Ultrasonic = require('../models/mqtt/sensors/ultrasonic.model');
+const WaterFlow = require('../models/sensors/water-flow.model');
+const PhMeter = require('../models/sensors/ph-meter.model');
+const Pressure = require('../models/sensors/pressure.model');
+const Ultrasonic = require('../models/sensors/ultrasonic.model');
 
 // Actuators
-const SolenoidValve = require('../models/mqtt/actuators/solenoid-valve');
+const SolenoidValve = require('../models/actuators/solenoid-valve');
 
 // All controllers must receive a message object.
 
