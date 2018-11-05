@@ -1,9 +1,9 @@
 const WaterFlow = require('../models/sensors/water-flow.model');
 const moment = require('moment');
 
-async function getWaterFlowRecords(time, value, count) {
+async function getWaterFlowRecords(time, value, count, identification = undefined) {
     let dateSelected = undefined;
-    let dateQueryCondition = undefined;
+    let dateQueryCondition = { identification };
 
     if (time === 'today') {
         dateSelected = moment(Date.now());
@@ -15,11 +15,9 @@ async function getWaterFlowRecords(time, value, count) {
     }
 
     if (dateSelected) {
-        dateQueryCondition = {
-            date: {
-                $gte: dateSelected.startOf('day').valueOf(), $lte: dateSelected.endOf('day').valueOf()
-            }
-        };
+        dateQueryCondition.date = {
+            $gte: dateSelected.startOf('day').valueOf(), $lte: dateSelected.endOf('day').valueOf()
+        }
     }
     const waterRecords = await WaterFlow.find(dateQueryCondition).limit(count).sort({ date: 'desc' });
     if (!waterRecords) {
