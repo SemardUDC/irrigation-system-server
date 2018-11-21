@@ -2,7 +2,7 @@ const WaterFlow = require('../models/sensors/water-flow.model');
 const Ultrasonic = require('../models/sensors/ultrasonic.model');
 const Pressure = require('../models/sensors/pressure.model');
 const PhMeter = require('../models/sensors/ph-meter.model');
-const { createQueryCondition } = require('../utils/models');
+const { createQueryCondition, arrangeByIdentification } = require('../utils/models');
 
 
 async function getWaterFlowRecords(req, res) {
@@ -12,7 +12,7 @@ async function getWaterFlowRecords(req, res) {
     const identification = req.params.identification;
 
     const queryCondition = createQueryCondition(time, value, identification);
-    const waterFlowRecords = await WaterFlow.find(queryCondition).limit(count).sort({ date: 'desc' });
+    const waterFlowRecords = arrangeByIdentification(await WaterFlow.find(queryCondition).limit(count).sort({ date: 'desc' }));
 
     res.send({ waterFlowRecords });
 }
@@ -24,8 +24,8 @@ async function getUltrasonicRecords(req, res) {
     const identification = req.params.identification;
 
     const queryCondition = createQueryCondition(time, value, identification);
-    const ultrasonicRecords = await Ultrasonic.find(queryCondition).limit(count).sort({ date: 'desc' });
-    
+    const ultrasonicRecords = arrangeByIdentification(await Ultrasonic.find(queryCondition).limit(count).sort({ date: 'desc' }));
+
     res.send({ ultrasonicRecords });
 }
 
