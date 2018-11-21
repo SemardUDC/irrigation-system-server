@@ -1,121 +1,171 @@
 {
     "swagger": "2.0",
     "info": {
-      "version": "1.0.0",
-      "title": "Mean Application API",
-      "description": "Mean Application API",
-      "license": {
-        "name": "MIT",
-        "url": "https://opensource.org/licenses/MIT"
-      }
+        "version": "1.0.0",
+        "title": "Irrigation System API",
+        "description": "API for managing and consulting state of devices for an irrigation system.",
+        "license": {
+            "name": "MIT",
+            "url": "https://opensource.org/licenses/MIT"
+        }
     },
     "host": "localhost:4040",
     "basePath": "/api/",
     "tags": [
-      {
-        "name": "Users",
-        "description": "API for users in the system"
-      },
-      {
-        "name": "Auth",
-        "description": "API for auth in the system"
-      }
+        {
+            "name": "Sensors",
+            "description": "API for managing sensors."
+        },
+        {
+            "name": "Actuators",
+            "description": "API for managing actuators."
+        }
     ],
     "schemes": [
-      "http"
+        "http"
     ],
     "consumes": [
-      "application/json"
+        "application/json"
     ],
     "produces": [
-      "application/json"
+        "application/json"
     ],
-    "securityDefinitions": {
-      "AuthHeader": {
-        "type": "apiKey",
-        "in": "header",
-        "name": "Authorization"
-      }
-    },
     "paths": {
-      "/auth/login": {
-        "post": {
-          "tags": ["Auth"],
-          "description": "Login to the system",
-        "parameters": [{
-          "name": "auth",
-          "in": "body",
-          "description": "User auth details",
-          "schema": {
-            "type": "object",
-            "required": ["email", "password"],
-            "properties": {
-              "email": {
-                "type": "string"
-              },
-              "password": {
-                "type": "string"
-              }
+        "/sensor/ultrasonic": {
+            "get": {
+                "tags": [
+                    "Sensors"
+                ],
+                "description": "Get the records for ultrasonic sensor.",
+                "parameters": [
+                    {
+                        "name": "time",
+                        "in": "query",
+                        "description": "States the require time frame to consider.",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "count",
+                        "in": "query",
+                        "description": "States the number of records to return.",
+                        "schema": {
+                            "type": "number"
+                        }
+                    },
+                    {
+                        "name": "value",
+                        "in": "query",
+                        "description": "Timestamp where the year/month/day is consider for filtering.",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Records for the ultrasonic sensor.",
+                        "schema": {
+                            "$ref": "#/definitions/Ultrasonics"
+                        }
+                    }
+                }
             }
-          }
-        }],
-        "produces": [
-          "application/json"
-        ],
-        "responses": {
-          "200": {
-            "description": "User is loggedin",
-            "schema": {
-              "$ref": "#/definitions/User"
+        },
+        "/sensor/ultrasonic/{identification}": {
+            "get": {
+                "tags": [
+                    "Sensors"
+                ],
+                "description": "Get the records by id for a specific ultrasonic sensor.",
+                "parameters": [
+                    {
+                        "name": "identification",
+                        "in": "path",
+                        "description": "Numeric id corresponding to the records of a specific ultrasonic sensor.",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "required": true
+                    },
+                    {
+                        "name": "time",
+                        "in": "query",
+                        "description": "States the require time frame to consider to filter. It can be `today` or `day`",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "count",
+                        "in": "query",
+                        "description": "States the number of records to return.",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "value",
+                        "in": "query",
+                        "description": "Timestamp where the year/month/day is consider for filtering. Only valid if `time` was day",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Records for the specified ultrasonic sensor.",
+                        "schema": {
+                            "$ref": "#/definitions/Ultrasonics"
+                        }
+                    }
+                }
             }
-          }
-        }
-      }
-      }
+        },
+        "/sensor/water-flow": {},
+        "/sensor/water-flow": {}
     },
     "definitions": {
-      "User": {
-        "required": [
-          "email",
-          "fullname"
-        ],
-        "properties": {
-          "_id": {
-            "type": "string",
-            "uniqueItems": true
-          },
-          "email": {
-            "type": "string",
-            "uniqueItems": true
-          },
-          "fullname": {
-            "type": "string"
-          },
-          "createdAt": {
-            "type": "string"
-          },
-          "roles": {
-            "type": "array",
-            "items": {
-              "type": "string"
+        "Ultrasonic": {
+            "type": "object",
+            "properties": {
+                "identification": {
+                    "type": "integer"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "distance": {
+                    "type": "integer"
+                },
+                "date": {
+                    "type": "integer"
+                }
             }
-          }
+        },
+        "Ultrasonics": {
+            "type": "object",
+            "properties": {
+                "ultrasonicRecords": {
+                    "type": "object",
+                    "properties": {
+                        "identification": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Ultrasonic"
+                            }
+                        }
+                    }
+                }
+            }
         }
-      },
-      "Users": {
-        "type": "array",
-        "$ref": "#/definitions/User"
-      },
-      "Auth": {
-        "type": "object",
-        "properties": [{
-          "token": {
-            "type": "string"
-          },
-          "user": {
-            "$ref": "#/definitions/User"
-          }
-        }]
-      }
-  }
+    }
 }
