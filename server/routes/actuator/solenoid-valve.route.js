@@ -6,5 +6,6 @@ const router = express.Router();
 
 router.get('/', asyncHandler(actuatorCtrl.getSolenoidValveRecords));
 router.get('/:identification', asyncHandler(actuatorCtrl.getSolenoidValveRecords));
+router.post('/:identification', asyncHandler(actuatorCtrl.manipulateSolenoidValve));
 
 module.exports = router;
