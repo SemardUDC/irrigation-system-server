@@ -5,6 +5,7 @@ const PhMeter = require('../models/sensors/ph-meter.model');
 const { createQueryCondition, arrangeByIdentification } = require('../utils/models');
 
 
+
 async function getWaterFlowRecords(req, res) {
     const time = String(req.query.time);
     const value = Number(req.query.value);
