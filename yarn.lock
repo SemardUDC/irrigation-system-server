@@ -872,6 +872,14 @@ async-limiter@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/async-limiter/-/async-limiter-1.0.0.tgz#78faed8c3d074ab81f22b4e985d79e8738f720f8"
 
+async-mqtt@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/async-mqtt/-/async-mqtt-2.0.0.tgz#82c3b494fc890f64fe70b566b7180e01d8a13cc2"
+  integrity sha512-5Dp4nof95hlRAOgmc5ZxwKAUQ1XLmTULIUFJQf7xNE3B0eTNSB7ya8xzxJyUX3PDBhQCWPlEiyslzGXPqDNB2Q==
+  dependencies:
+    in-array "^0.1.2"
+    mqtt "^2.3.1"
+
 async@1.x, async@^1.4.0, async@^1.5.0, async@^1.5.2:
   version "1.5.2"
   resolved "https://registry.yarnpkg.com/async/-/async-1.5.2.tgz#ec6a61ae56480c0c3cb241c95618e20892f9672a"
@@ -5157,6 +5165,11 @@ imurmurhash@^0.1.4:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/imurmurhash/-/imurmurhash-0.1.4.tgz#9218b9b2b928a238b13dc4fb6b6d576f231453ea"
 
+in-array@^0.1.2:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/in-array/-/in-array-0.1.2.tgz#1a2683009177ab914ade0620a35c5039851f3715"
+  integrity sha1-GiaDAJF3q5FK3gYgo1xQOYUfNxU=
+
 in-publish@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/in-publish/-/in-publish-2.0.0.tgz#e20ff5e3a2afc2690320b6dc552682a9c7fadf51"
@@ -7143,7 +7156,7 @@ mqtt-packet@^5.6.0:
     process-nextick-args "^2.0.0"
     safe-buffer "^5.1.0"
 
-mqtt@^2.18.8:
+mqtt@^2.18.8, mqtt@^2.3.1:
   version "2.18.8"
   resolved "https://registry.yarnpkg.com/mqtt/-/mqtt-2.18.8.tgz#9d213ccab92151accfb21ee8c0860dc6866ab259"
   dependencies:

@@ -1,4 +1,4 @@
-const mqtt = require('mqtt');
+const mqtt = require('async-mqtt');
 const { mqttTopics, mqttRoutes } = require('../routes/mqtt.route');
 const config = require('./config');
 
@@ -16,13 +16,9 @@ client.on('error', (error) => {
     throw new Error(`Error while connecting ${error.message}`);
 });
 
-client.subscribe(mqttTopics, (error, granted) => {
-    if (error) {
-        throw new Error(`Error connecting to topics: ${error.message}`);
-    }
-    let counter = 1;
-    console.log(`Access granted to mqttTopics: \n\t${mqttTopics.join(`\n\t`).toString()}`);
-});
+client.subscribe(mqttTopics).then(() => {
+    console.log(`Access granted to mqttTopics: \n\t${mqttTopics.join(`\n\t`).toString()}`)
+}).catch((e) => { throw new Error(`Error connecting to topics: ${error.message}`) });
 
 client.on('message', async (topic, payload, packet) => {
     if (mqttRoutes[topic]) {
