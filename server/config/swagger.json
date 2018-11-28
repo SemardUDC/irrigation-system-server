@@ -1,0 +1,311 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "Irrigation System API",
+        "description": "API for managing and consulting state of devices for an irrigation system.",
+        "license": {
+            "name": "MIT",
+            "url": "https://opensource.org/licenses/MIT"
+        }
+    },
+    "host": "localhost:4040",
+    "basePath": "/api/",
+    "tags": [
+        {
+            "name": "Sensors",
+            "description": "API for managing sensors."
+        },
+        {
+            "name": "Actuators",
+            "description": "API for managing actuators."
+        }
+    ],
+    "schemes": [
+        "http"
+    ],
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/sensor/ultrasonic": {
+            "get": {
+                "tags": [
+                    "Sensors"
+                ],
+                "description": "Get the records for ultrasonic sensor.",
+                "parameters": [
+                    {
+                        "name": "time",
+                        "in": "query",
+                        "description": "States the require time frame to consider.",
+                        "schema": {
+                            "type": "string",
+                            "enum": ["today", "day"]
+                        }
+                    },
+                    {
+                        "name": "count",
+                        "in": "query",
+                        "description": "States the number of records to return.",
+                        "schema": {
+                            "type": "number"
+                        }
+                    },
+                    {
+                        "name": "value",
+                        "in": "query",
+                        "description": "Timestamp where the year/month/day is consider for filtering.",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Records for the ultrasonic sensor.",
+                        "schema": {
+                            "$ref": "#/definitions/Ultrasonics"
+                        }
+                    }
+                }
+            }
+        },
+        "/sensor/ultrasonic/{identification}": {
+            "get": {
+                "tags": [
+                    "Sensors"
+                ],
+                "description": "Get the records by id for a specific ultrasonic sensor.",
+                "parameters": [
+                    {
+                        "name": "identification",
+                        "in": "path",
+                        "description": "Numeric id corresponding to the records of a specific ultrasonic sensor.",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "required": true
+                    },
+                    {
+                        "name": "time",
+                        "in": "query",
+                        "description": "States the require time frame to consider to filter. It can be `today` or `day`",
+                        "schema": {
+                            "type": "string",
+                            "enum": ["today", "day"]
+                        }
+                    },
+                    {
+                        "name": "count",
+                        "in": "query",
+                        "description": "States the number of records to return.",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "value",
+                        "in": "query",
+                        "description": "Timestamp where the year/month/day is consider for filtering. Only valid if `time` was day",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Records for the specified ultrasonic sensor.",
+                        "schema": {
+                            "$ref": "#/definitions/Ultrasonics"
+                        }
+                    }
+                }
+            }
+        },
+        "/sensor/water-flow": {},
+        "/sensor/water-flow": {},
+        "/actuator/solenoid-valve/{identification}": {
+            "get": {
+                "tags": [
+                    "Actuators"
+                ],
+                "description": "Get the historic records about a specific solenoid-valve device.",
+                "parameters": [
+                    {
+                        "name": "identification",
+                        "in": "path",
+                        "description": "Numeric id corresponding to the records of a specific solenoid-valve.",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "required": true
+                    },
+                    {
+                        "name": "time",
+                        "in": "query",
+                        "description": "States the require time frame to consider to filter. It can be `today` or `day`",
+                        "schema": {
+                            "type": "string",
+                            "enum": ["today", "day"]
+                        }
+                    },
+                    {
+                        "name": "count",
+                        "in": "query",
+                        "description": "States the number of records to return.",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "value",
+                        "in": "query",
+                        "description": "Timestamp where the year/month/day is consider for filtering. Only valid if `time` was day",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Records for the specified solenoid-valve device.",
+                        "schema": {
+                            "$ref": "#/definitions/Solenoid-Valves"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Actuators"
+                ],
+                "description": "Manipulates the state of the specified solenoid-valve device through mqtt messages to `irrigation-system/actuator/solenoid-valve/set` topic",
+                "parameters": [
+                    {
+                        "name": "identification",
+                        "in": "path",
+                        "type": "integer",
+                        "description": "Numeric id corresponding to the records of a specific solenoid-valve."
+                    },
+                    {
+                        "name": "action",
+                        "in": "body",
+                        "type": "object",
+                        "description": "JSON object with the action to execute that modifies the state of the solenoid-valve.",
+                        "enum": ["open", "close"],
+                        "properties": {
+                            "action": {
+                                "type": "string",
+                                "enum": ["open", "close"]
+                            }
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The final message sent to the concerned mqtt topic with a description.",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "identification": {
+                                    "type": "integer"
+                                },
+                                "state": {
+                                    "type": "string",
+                                    "enum": ["open", "close"]
+                                },
+                                "description": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "Ultrasonic": {
+            "type": "object",
+            "properties": {
+                "identification": {
+                    "type": "integer"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "distance": {
+                    "type": "integer"
+                },
+                "date": {
+                    "type": "integer"
+                }
+            }
+        },
+        "Ultrasonics": {
+            "type": "object",
+            "properties": {
+                "ultrasonicRecords": {
+                    "type": "object",
+                    "properties": {
+                        "identification": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Ultrasonic"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Solenoid-Valve": {
+            "type": "object",
+            "properties": {
+                "identification": {
+                    "type": "integer"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "open": {
+                    "type": "boolean"
+                },
+                "date": {
+                    "type": "integer"
+                }
+            }
+        },
+        "Solenoid-Valves": {
+            "type": "object",
+            "properties": {
+                "solenoidValveRecords" : {
+                    "type": "object",
+                    "properties": {
+                        "identification": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Solenoid-Valve"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

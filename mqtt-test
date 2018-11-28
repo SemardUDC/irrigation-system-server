@@ -1,0 +1,19 @@
+water flow test:
+irrigation-system/sensor/water-flow
+{"identification":"1", "description":"test", "content":"500"}
+
+ph meter test:
+irrigation-system/sensor/ph-meter
+{"identification":"55", "description":"ph meter", "ph":"1"}
+
+presure test:
+irrigation-system/sensor/pressure
+{"identification":"55", "description":"pressure meter", "kpa":"1"}
+
+ultrasonic test:
+irrigation-system/sensor/ultrasonic
+{"identification":"5", "description":"ultrasonic sensor", "distance":"50"}
+
+solenoid-valve test:
+irrigation-system/actuator/solenoid-valve/get
+{"identification":"5", "description":"solenoid valve sensor", "open":"false"}
