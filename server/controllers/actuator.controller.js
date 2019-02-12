@@ -15,11 +15,13 @@ async function getSolenoidValveRecords(req, res) {
 }
 
 async function manipulateSolenoidValve(req, res) {
-    const identification = Number(req.params.identification);
+    const identification = req.params.identification == '*' ? req.params.identification : Number(req.params.identification);
     const action = String(req.body.action);
 
     if (!['open', 'close'].includes(action)) {
         return res.status(400).send({ message: `Action field must be 'open' or 'close'` });
+    } else if (identification != '*' && typeof (identification) != 'number') {
+        return res.status(400).send({ message: `Identification field invalid, must be a number or '*' symbol.` });
     }
 
     const message = {
