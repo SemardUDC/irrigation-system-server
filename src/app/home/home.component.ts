@@ -1,4 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import {
+  IMqttMessage,
+  MqttService,
+  IMqttServiceOptions
+} from 'ngx-mqtt';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -7,7 +13,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  private subscription: Subscription;
+  public message: string;
+
+  constructor(private _mqttService: MqttService) {
+    this.subscription = this._mqttService.observe('my/topic').subscribe((message: IMqttMessage) => {
+      this.message = message.payload.toString();
+    });
+   }
 
   ngOnInit() {
   }
