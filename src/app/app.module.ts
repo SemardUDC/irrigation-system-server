@@ -9,6 +9,7 @@ import {
   MqttService,
   IMqttMessage
 } from 'ngx-mqtt';
+import { GoogleChartsModule } from 'angular-google-charts';
 
 export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
   connectOnCreate: true,
@@ -31,6 +32,18 @@ import { AppRoutingModule } from './app-routing/app-routing.module';
 import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
 
+// Import angular-fusioncharts
+import { FusionChartsModule } from 'angular-fusioncharts';
+
+// Load FusionCharts
+import * as FusionCharts from 'fusioncharts';
+// Load Charts module
+import * as Widgets from 'fusioncharts/fusioncharts.widgets';
+// Load fusion theme
+import * as FusionTheme from 'fusioncharts/themes/fusioncharts.theme.fusion'
+
+// Add dependencies to FusionChartsModule
+FusionChartsModule.fcRoot(FusionCharts, Widgets, FusionTheme);
 
 @NgModule({
   declarations: [
@@ -47,7 +60,9 @@ import { HomeComponent } from './home/home.component';
     AuthModule,
     AdminModule,
     AppRoutingModule,
-    MqttModule.forRoot(MQTT_SERVICE_OPTIONS)
+    MqttModule.forRoot(MQTT_SERVICE_OPTIONS),
+    GoogleChartsModule.forRoot(),
+    FusionChartsModule 
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,
