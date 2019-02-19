@@ -4,14 +4,17 @@ import { NgModule } from '@angular/core';
 import { RouterModule, PreloadAllModules } from '@angular/router';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import {
-  IMqttMessage,
   MqttModule,
-  IMqttServiceOptions
+  IMqttServiceOptions,
+  MqttService,
+  IMqttMessage
 } from 'ngx-mqtt';
 
 export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
-  hostname: 'mqtt://m15.cloudmqtt.com',
-  port: 19328,
+  connectOnCreate: true,
+  hostname: 'm15.cloudmqtt.com',
+  port:  	39328 ,
+  protocol: 'wss',
   username: 'crpccsnj',
   password: 'hZ5N5ca3F07r'
 };

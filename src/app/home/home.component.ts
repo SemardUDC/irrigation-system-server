@@ -1,17 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import {
   IMqttMessage,
-  MqttService,
-  IMqttServiceOptions
+  MqttService
 } from 'ngx-mqtt';
-import { Observable } from 'rxjs';
+import { Observable,Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnDestroy {
 
   private subscription: Subscription;
   public message: string;
@@ -21,8 +20,13 @@ export class HomeComponent implements OnInit {
       this.message = message.payload.toString();
     });
    }
+  
+  public unsafePublish(topic: string, message: string): void {
+    this._mqttService.unsafePublish(topic, message, {qos: 1, retain: true});
+  }
 
-  ngOnInit() {
+  public ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
 }
