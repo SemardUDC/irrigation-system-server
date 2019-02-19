@@ -1,27 +1,79 @@
-<h1 class="text-center">Panel de control</h1>
-<hr>
-<div class="text-center">
-    <div class="row">
-        <div class="col-sm-6">
-            <h4>PH Level</h4>
-            {{message}}
+<div class="container">
+  <div class="row text-center">
+    <div class="col-sm-8">
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#area1">Area 1</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#area2">Area 2</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#area3">Area 3</a>
+            </li>
+        </ul>
+        <div id="myTabContent" class="tab-content">
+            <div class="tab-pane fade show active" id="area1">
+                <div class="row">
+                    <div class="col-sm-4"><h5>Temperatura</h5>
+                        <fusioncharts width="200" height="200" type="thermometer" dataFormat="json" [dataSource]="tempdata" ></fusioncharts>
+                    </div>   
+                    <div class="col-sm-4"><h5>Humedad del suelo</h5></div>
+                    <div class="col-sm-4"><h5>Humedad relativa</h5></div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="area2">
+                    <div class="row">
+                        <div class="col-sm-4">Temperatura</div>
+                        <div class="col-sm-4">Humedad del suelo</div>
+                        <div class="col-sm-4">Humedad relativa</div>
+                    </div>
+            </div>
+            <div class="tab-pane fade" id="area3">
+                <div class="row">
+                        <div class="col-sm-4"><h5>Temperatura</h5></div>
+                        <div class="col-sm-4"><h5>Humedad del suelo</h5></div>
+                        <div class="col-sm-4"><h5>Humedad relativa</h5></div>
+                    </div>
+                </div>
         </div>
-        <div class="col-sm-6">
-            <h4>Water Flow</h4>
+        <hr>
+        <div class="text-center">
+            <h4>General system</h4>
+            <div class="row">
+                <div class="col-sm-3">
+                    <h4>PH Level</h4>
+                    <div class="chart">
+                        <google-chart [type]="phType" [data]="phData" [options]="phOptions"></google-chart>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <h4>Water Flow</h4>
+                </div>
+                <div class="col-sm-3">
+                    <h4>Pressure</h4>
+                </div>
+                <div class="col-sm-3">
+                    <h4>Ultrasonic</h4>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-sm-6">
-            <h4>Pressure</h4>
+    <div class="col-sm-4">
+        <h4>Alertas</h4>
+        <hr>
+        <div class="alert alert-dismissible alert-danger">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>Oh snap!</strong> <a href="#" class="alert-link">Change a few things up</a> and try submitting again.
         </div>
-        <div class="col-sm-6">
-          <div class="form-group">
-            <div class="custom-control custom-switch">
-              <input type="checkbox" class="custom-control-input" id="customSwitch1" checked="">
-                <label class="custom-control-label" for="customSwitch1"></label>
-              </div>
-            </div>  
+        <div class="alert alert-dismissible alert-primary">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>Oh snap!</strong> <a href="#" class="alert-link">Change a few things up</a> and try submitting again.
+        </div>
+        <div class="alert alert-dismissible alert-info">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>Heads up!</strong> This <a href="#" class="alert-link">alert needs your attention</a>, but it's not super important.
         </div>
     </div>
-    
+  </div>
 </div>
