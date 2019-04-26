@@ -5,7 +5,7 @@ const Pressure = require('../models/sensors/pressure.model');
 const Ultrasonic = require('../models/sensors/ultrasonic.model');
 
 // Actuators
-const SolenoidValve = require('../models/actuators/solenoid-valve');
+const SolenoidValve = require('../models/actuators/solenoid-valve.model');
 
 // All controllers must receive a message object.
 

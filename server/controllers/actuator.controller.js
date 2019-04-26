@@ -1,4 +1,4 @@
-const SolenoidValve = require('../models/actuators/solenoid-valve');
+const SolenoidValve = require('../models/actuators/solenoid-valve.model');
 const mqttClient = require('../config/mqtt');
 const { createQueryCondition } = require('../utils/models');
 
@@ -26,7 +26,7 @@ async function manipulateSolenoidValve(req, res) {
 
     const message = {
         identification,
-        state: action
+        action
     };
 
     const messageJSON = JSON.stringify(message);
