@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Common = require('../common');
 
 const PressureSchema = new mongoose.Schema({
     identification: {
@@ -17,6 +18,12 @@ const PressureSchema = new mongoose.Schema({
         type: Date,
         required: true
     }
+}, {
+    toObject: {
+        transform: Common.toObjectTransformation
+    }
 });
+
+PressureSchema.statics.findLastRecordForEachId = Common.findLastRecordForEachId;
 
 module.exports = mongoose.model('pressures', PressureSchema);

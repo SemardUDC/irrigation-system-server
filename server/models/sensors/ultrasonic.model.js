@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Common = require('../common');
 
 const UltrasonicSchema = new mongoose.Schema({
     identification: {
@@ -20,14 +21,12 @@ const UltrasonicSchema = new mongoose.Schema({
         type: Date,
         required: true
     }
-});
-
-UltrasonicSchema.set('toObject', {
-    transform: (doc, ret) => {
-        delete ret._id;
-        delete ret.__v;
-        return ret;
+}, {
+    toObject: {
+        transform: Common.toObjectTransformation
     }
 });
+
+UltrasonicSchema.statics.findLastRecordForEachId = Common.findLastRecordForEachId;
 
 module.exports = mongoose.model('ultrasonics', UltrasonicSchema);

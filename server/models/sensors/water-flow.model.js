@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Common = require('../common');
 
 const WaterFlowSchema = new mongoose.Schema({
     identification: {
@@ -18,14 +19,12 @@ const WaterFlowSchema = new mongoose.Schema({
         type: Date,
         required: true
     }
-});
-
-WaterFlowSchema.set('toObject', {
-    transform: (doc, ret) => {
-        delete ret._id;
-        delete ret.__v;
-        return ret;
+}, {
+    toObject: {
+        transform: Common.toObjectTransformation
     }
 });
+
+WaterFlowSchema.statics.findLastRecordForEachId = Common.findLastRecordForEachId;
 
 module.exports = mongoose.model('water-flows', WaterFlowSchema);

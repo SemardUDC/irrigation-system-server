@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Common = require('../common');
 
 const SolenoidValveSchema = new mongoose.Schema({
     identification: {
@@ -17,14 +18,12 @@ const SolenoidValveSchema = new mongoose.Schema({
         type: Date,
         required: true
     }
+}, {
+    toObject: {
+        transform: Common.toObjectTransformation
+    }
 });
 
-SolenoidValveSchema.set('toObject', {
-    transform: (doc, ret) => {
-        delete ret._id;
-        delete ret.__v;
-        return ret;
-    }
-})
+SolenoidValveSchema.statics.findLastRecordForEachId = Common.findLastRecordForEachId;
 
 module.exports = mongoose.model('solenoid-valves', SolenoidValveSchema);

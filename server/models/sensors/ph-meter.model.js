@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Common = require('../common');
 
 const PhMeterSchema = new mongoose.Schema({
     identification: {
@@ -19,6 +20,12 @@ const PhMeterSchema = new mongoose.Schema({
         type: Date,
         required: true
     }
+}, {
+    toObject: {
+        transform: Common.toObjectTransformation
+    }
 });
+
+PhMeterSchema.statics.findLastRecordForEachId = Common.findLastRecordForEachId; 
 
 module.exports = mongoose.model('ph-meters', PhMeterSchema);
