@@ -1,4 +1,4 @@
-# Sistema de riesgo
+# Sistema de riego
 Servidor del proyecto Sistema de Riego para la recolección de datos y activación de electroválvulas por medio de MQTT.
 
 ## Servidor
@@ -34,11 +34,49 @@ El cliente web ofrece visualizaciones de los datos recibidos del servidor corres
 - irrigation-system/sensor/ultrasonic
 - irrigation-system/sensor/pressure
 ```
+#### Estructura mensaje a publicar
+```
+{
+    "identification": [number],
+    "description": [string],
+    "ph" | "content" | "distance" | "kpa" : [number | string]
+}
+```
+
 ### Actuadores
+
+El sentido jerárquico de 'get' y 'set' cobran sentido de acuerdo a quién es el suscriptor y publicador. Get para cuando el ESP publica el estado de los actuadores. Set, para cuando el ESP, como suscriptor al topic, recibe un payload para modificar el estado de actuadores.
+
+**get** indica publicación del estado del actuador por el ESP. Así, los suscritos al topic, obtienen los datos.
+
+**set** indica modificación del estado del actuador. Normalmente por activación/desactivación. Así, el servidor publica en este topic los motores o electrovalvulas a abrir/cerrar y el ESP, suscrito al mismo,recibe las instrucciones.
+
 ```
 - irrigation-system/actuator/solenoid-valve/get
 - irrigation-system/actuator/solenoid-valve/set
+- irrigation-system/actuator/pump-motor/get
+- irrigation-system/actuator/pump-motor/set
 ```
+
+#### Estructura mensaje a publicar
+##### Mensaje Get Publicador: ESP
+```
+{
+    "identification": [number],
+    "description": [string],
+    "open" | "state" : [boolean]
+}
+```
+##### Mensaje Set Suscrito: ESP
+```
+{
+    "identification": [char | number],
+    "action": [boolean]
+}
+```
+
+El campo *identification* puede ser un char o número. Char cuando es '*', que indica aplicación de la acción a todos los actuadores correspondientes al topic. Number, correspondiente a la identificación individual de cada actuador.
+
 ### Reporte de estado y conexión
 ```
 - irrigation-system/state
@@ -64,7 +102,7 @@ El cliente web ofrece visualizaciones de los datos recibidos del servidor corres
 - GET /actuator/solenoid-valve/:identification
 ```
 
-### Parametros de Consulta
+### Parametros de Consulta RESTful
 | Parametro | Descripción                                                                                         | Tipo   |
 |-----------|-----------------------------------------------------------------------------------------------------|--------|
 | `time`      | Define una franja de tiempo para filtrar los datos a servir. Valores esperados son `today` o `day`. | `string` |
