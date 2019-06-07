@@ -16,7 +16,7 @@ async function getSolenoidValveRecords(req, res) {
 }
 
 async function manipulateSolenoidValve(req, res) {
-    const identification = req.params.identification == '*' ? req.params.identification : Number(req.params.identification);
+    const identification =  (req.params.identification) ? Number(req.params.identification) : '*';
     const action = String(req.body.action);
 
     if (!['open', 'close'].includes(action)) {
