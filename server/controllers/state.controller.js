@@ -3,6 +3,7 @@ const Pressure = require('../models/sensors/pressure.model');
 const Ultrasonic = require('../models/sensors/ultrasonic.model');
 const WaterFlow = require('../models/sensors/water-flow.model');
 const SolenoidValve = require('../models/actuators/solenoid-valve.model');
+const PumpMotor = require('../models/actuators/pump-motor.model');
 
 async function getStateOfSensors(req, res) {
     const lastReportedState = {
@@ -29,10 +30,17 @@ async function getStateOfSensors(req, res) {
 
 async function getStateOfActuators(req, res) {
     const lastReportedState = {
-        solenoidValve: []
+        solenoidValve: [],
+        pumpMotor: []
     };
 
-    lastReportedState.solenoidValve = await SolenoidValve.findLastRecordForEachId();
+    const queryResults = await Promise.all([
+        SolenoidValve.findLastRecordForEachId(), 
+        PumpMotor.findLastRecordForEachId()
+    ]);
+
+    lastReportedState.solenoidValve = queryResults[0];
+    lastReportedState.pumpMotor = queryResults[1];
 
     res.send({ lastReportedState });
 }
@@ -46,7 +54,8 @@ async function getStateOfSystem(req, res) {
             waterFlow: []
         },
         actuators: {
-            solenoidValve: []
+            solenoidValve: [],
+            pumpMotor: []
         }
     };
 
@@ -55,7 +64,8 @@ async function getStateOfSystem(req, res) {
         Pressure.findLastRecordForEachId(),
         Ultrasonic.findLastRecordForEachId(),
         WaterFlow.findLastRecordForEachId(),
-        SolenoidValve.findLastRecordForEachId()
+        SolenoidValve.findLastRecordForEachId(),
+        PumpMotor.findLastRecordForEachId()
     ]);
 
     lastReportedState.sensors.phMeter = queryResults[0];
@@ -63,6 +73,7 @@ async function getStateOfSystem(req, res) {
     lastReportedState.sensors.ultrasonic = queryResults[2];
     lastReportedState.sensors.waterFlow = queryResults[3];
     lastReportedState.actuators.solenoidValve = queryResults[4];
+    lastReportedState.actuators.pumpMotor = queryResults[5];
 
     res.send({ lastReportedState });
 }
