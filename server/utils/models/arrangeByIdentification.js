@@ -9,9 +9,9 @@ function arrangeByIdentification(records) {
     const arrangedRecords = {};
     let idAux;
 
-    for(record of records) {
+    for(const record of records) {
         idAux = record.identification;
-        delete record.identification;
+        record.identification = undefined;
         
         if (arrangedRecords[idAux]) {            
             arrangedRecords[idAux].push(record);
