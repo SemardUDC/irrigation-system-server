@@ -42,8 +42,8 @@ async function manipulateSolenoidValve(req, res) {
 
 async function getPumpMotorRecords(req, res) {
     const time = String(req.query.time);
-    const value = String(req.query.value);
-    const count = String(req.query.count);
+    const value = Number(req.query.value);
+    const count = Number(req.query.count);
     const identification = req.params.identification;
 
     const queryCondition = createQueryCondition(time, value, identification);

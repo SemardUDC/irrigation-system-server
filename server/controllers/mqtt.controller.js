@@ -6,6 +6,7 @@ const Ultrasonic = require('../models/sensors/ultrasonic.model');
 
 // Actuators
 const SolenoidValve = require('../models/actuators/solenoid-valve.model');
+const PumpMotor = require('../models/actuators/pump-motor.model');
 
 // All controllers must receive a message object.
 
@@ -46,6 +47,13 @@ function solenoidValveController(topic, message, packet) {
     return solenoidValve.save();
 }
 
+function pumpMotorController(topic, message, packet) {
+    message.date = Date.now();
+    const pumpMotor = new PumpMotor(message);
+    console.log(`Pump Motor called - Message received from topic: ${topic}`);
+    return pumpMotor.save();
+}
+
 // ESP Client State controller.
 function stateReportController(topic, message, packet) {
     console.log(`State report called - Message received from topic: ${topic}`);
@@ -56,6 +64,7 @@ module.exports = {
     phMeterController, 
     ultrasonicController, 
     pressureController, 
-    solenoidValveController, 
+    solenoidValveController,
+    pumpMotorController,
     stateReportController
 }

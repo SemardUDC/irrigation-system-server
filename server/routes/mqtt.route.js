@@ -10,6 +10,7 @@ const topics = {
     ultrasonic: sensorPrefix + 'ultrasonic',
     pressure: sensorPrefix + 'pressure',
     solenoidValve: actuatorPrefix + 'solenoid-valve/get',
+    pumpMotor: actuatorPrefix + 'pump-motor/get',
     stateReport: statePrefix + 'state'
 };
 
@@ -32,6 +33,10 @@ const mqttRoutes = {
     [topics.solenoidValve]: {
         topic: topics.solenoidValve,
         controller: controllersObject.solenoidValveController
+    },
+    [topics.pumpMotor]: {
+        topic: topics.pumpMotor,
+        controller: controllersObject.pumpMotorController
     },
     [topics.ultrasonic]: {
         topic: topics.ultrasonic,
