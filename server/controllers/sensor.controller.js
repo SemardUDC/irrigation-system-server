@@ -37,7 +37,7 @@ async function getPressureRecords(req, res) {
     const identification = req.params.identification;
 
     const queryCondition = createQueryCondition(time, value, identification);
-    const pressureRecords = await Pressure.find(queryCondition).limit(count).sort({ date: 'desc' });
+    const pressureRecords = arrangeByIdentification(await Pressure.find(queryCondition).limit(count).sort({ date: 'desc' }));
 
     res.send({ pressureRecords });
 }
@@ -49,7 +49,7 @@ async function getPhMeterRecords(req, res) {
     const identification = req.params.identification;
 
     const queryCondition = createQueryCondition(time, value, identification);
-    const phMeterRecords = await PhMeter.find(queryCondition).limit(count).sort({ date: 'desc' });
+    const phMeterRecords = arrangeByIdentification(await PhMeter.find(queryCondition).limit(count).sort({ date: 'desc' }));
 
     res.send({ phMeterRecords });
 }
