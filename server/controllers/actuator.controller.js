@@ -55,8 +55,7 @@ async function getPumpMotorRecords(req, res) {
 async function manipulatePumpMotor(req, res) {
     const identification = (req.params.identification) ? Number(req.params.identification) : '*';
     const action = req.body.action;
-    console.log('Identification is: ', identification);
-    console.log('Action is: ', action);
+
     if (!['activate', 'deactivate'].includes(action)) {
         return res.status(400).send(`Action passed is invalid. Must be 'activate' or 'deactivate', was: ${action}`);
     }
