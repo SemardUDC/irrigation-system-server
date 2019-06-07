@@ -17,3 +17,7 @@ irrigation-system/sensor/ultrasonic
 solenoid-valve test:
 irrigation-system/actuator/solenoid-valve/get
 {"identification":"5", "description":"solenoid valve sensor", "open":"false"}
+
+pump-motor test:
+irrigation-system/actuator/pump-motor/get
+{"identification": 4, "description":"main pump motor", "activated": "true"}

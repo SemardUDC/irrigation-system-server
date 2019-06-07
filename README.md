@@ -113,8 +113,8 @@ Los siguientes devuelven un objeto JSON, conformado por el último registros en 
 
 ```
 - GET /api/state
-- GET /api/sensors
-- GET /api/actuators
+- GET /api/state/sensors
+- GET /api/state/actuators
 ```
 
 ### Parametros de Consulta RESTful
