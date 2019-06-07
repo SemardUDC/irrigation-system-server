@@ -1,7 +1,7 @@
 const SolenoidValve = require('../models/actuators/solenoid-valve.model');
 const PumpMotor = require('../models/actuators/pump-motor.model');
 const mqttClient = require('../config/mqtt');
-const { createQueryCondition } = require('../utils/models');
+const { createQueryCondition, arrangeByIdentification } = require('../utils/models');
 
 async function getSolenoidValveRecords(req, res) {
     const time = String(req.query.time);
@@ -10,7 +10,7 @@ async function getSolenoidValveRecords(req, res) {
     const identification = req.params.identification;
 
     const queryCondition = createQueryCondition(time, value, identification);
-    const solenoidValveRecords = await SolenoidValve.find(queryCondition).limit(count).sort({ date: 'desc' });
+    const solenoidValveRecords = arrangeByIdentification(await SolenoidValve.find(queryCondition).limit(count).sort({ date: 'desc' }));
 
     res.send({ solenoidValveRecords });
 }
@@ -47,7 +47,7 @@ async function getPumpMotorRecords(req, res) {
     const identification = req.params.identification;
 
     const queryCondition = createQueryCondition(time, value, identification);
-    const pumpMotorRecords = await PumpMotor.find(queryCondition).limit(count).sort({ date: 'desc' });
+    const pumpMotorRecords = arrangeByIdentification(await PumpMotor.find(queryCondition).limit(count).sort({ date: 'desc' }));
 
     res.send({ pumpMotorRecords });
 }
