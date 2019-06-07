@@ -10,7 +10,7 @@ Recibe datos de un microcontrolador por medio del protocolo MQTT. Los datos a ge
 
 ### Sensores:
 - Sensor de Presión.
-- Caudalímetro.
+- Caudalimetro.
 - PH-metro.
 - Ultrasonido.
 
@@ -85,21 +85,36 @@ El campo *identification* puede ser un char o número. Char cuando es '*', que i
 ## RESTful API
 ### Sensores
 ```
-- GET /sensor/
-- GET /sensor/water-flow/
-- GET /sensor/water-flow/:identification
-- GET /sensor/ultrasonic/
-- GET /sensor/ultrasonic/:identification
-- GET /sensor/ph-meter/
-- GET /sensor/ph-meter/:identification
-- GET /sensor/pressure/
-- GET /sensor/pressure/:identification
+- GET /api/sensor/
+- GET /api/sensor/water-flow/
+- GET /api/sensor/water-flow/:identification
+- GET /api/sensor/ultrasonic/
+- GET /api/sensor/ultrasonic/:identification
+- GET /api/sensor/ph-meter/
+- GET /api/sensor/ph-meter/:identification
+- GET /api/sensor/pressure/
+- GET /api/sensor/pressure/:identification
 ```
 ### Actuadores
 ```
-- GET /actuator/
-- GET /actuator/solenoid-valve/
-- GET /actuator/solenoid-valve/:identification
+- GET /api/actuator/
+- GET /api/actuator/solenoid-valve
+- GET /api/actuator/solenoid-valve/:identification
+- GET /api/actuator/pump-motor
+- GET /api/actuator/pump-motor/:identification
+- POST /api/actuator/solenoid_vale
+- POST /api/actuator/solenoid-valve/:identification
+- POST /api/actuator/pump-motor
+- POST /api/actuator/pump-motor/:identification
+```
+
+### Estado de Sensores y Actuadores
+Los siguientes devuelven un objeto JSON, conformado por el último registros en la BD de cada sensor/actuador de acuerdo id.
+
+```
+- GET /api/state
+- GET /api/sensors
+- GET /api/actuators
 ```
 
 ### Parametros de Consulta RESTful
